@@ -22,9 +22,10 @@ describe('Gitty routes', () => {
     );
   });
 
-  it('should login and redirect users to posts route', async () => {
-    const req = await request
-      .agent(app)
+  it('should login and redirect users to back to dashboard', async () => {
+    const agent = request.agent(app);
+
+    const req = await agent
       .get('/api/v1/github/login/callback?code=11')
       .redirects(1);
 
