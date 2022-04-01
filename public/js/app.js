@@ -1,5 +1,5 @@
 /* eslint-disable */
-fetch('/api/v1/auth/verify')
+fetch('/api/v1/github/verify')
   .then((res) => {
     if (res.ok) return res.json();
     else throw new Error('Not logged in');
@@ -13,7 +13,7 @@ fetch('/api/v1/auth/verify')
     const button = document.createElement('button');
     button.textContent = 'Login with GitHub';
     button.addEventListener('click', () => {
-      window.location.assign('/api/v1/auth/login');
+      window.location.assign('/api/v1/github/login');
     });
 
     document.getElementById('root').appendChild(button);
