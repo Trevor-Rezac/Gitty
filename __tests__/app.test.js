@@ -38,4 +38,8 @@ describe('Gitty routes', () => {
       exp: expect.any(Number),
     });
   });
+
+  it('should list all posts for all users', async () => {
+    
+  });
 });
