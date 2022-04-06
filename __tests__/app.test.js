@@ -32,5 +32,19 @@ describe('Gitty routes', () => {
     expect(req.req.path).toEqual('/api/v1/posts');
   });
 
-  it('should list all posts for all users', async () => {});
+  it('should list all posts for all users', async () => {
+    const agent = request.agent(app);
+
+    const res = await agent
+      .get('/api/v1/github/login/callback?code=11')
+      .redirects(1);
+
+    expect(res.body).toEqual([
+      {
+        id: expect.any(String),
+        title: 'Test Title',
+        body: 'Test post',
+      },
+    ]);
+  });
 });
