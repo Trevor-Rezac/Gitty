@@ -28,7 +28,6 @@ describe('Gitty routes', () => {
     const req = await agent
       .get('/api/v1/github/login/callback?code=11')
       .redirects(1);
-    console.log('req.req.path: ', req.req.path);
     expect(req.req.path).toEqual('/api/v1/posts');
   });
 
@@ -46,5 +45,22 @@ describe('Gitty routes', () => {
         body: 'Test post',
       },
     ]);
+  });
+
+  it('should allow an authenticated user to create a new post', async () => {
+    const agent = request.agent(app);
+
+    await agent.get('/api/v1/github/login/callback?code=11').redirects(1);
+
+    const res = await agent.post('/api/v1/posts').send({
+      title: 'New Title',
+      body: 'New Post',
+    });
+
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      title: 'New Title',
+      body: 'New Post',
+    });
   });
 });
