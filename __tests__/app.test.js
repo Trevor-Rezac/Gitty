@@ -22,24 +22,15 @@ describe('Gitty routes', () => {
     );
   });
 
-  it('should login and redirect users to back to dashboard', async () => {
+  it('should login and redirect users to back to posts', async () => {
     const agent = request.agent(app);
 
     const req = await agent
       .get('/api/v1/github/login/callback?code=11')
       .redirects(1);
-
-    expect(req.body).toEqual({
-      id: expect.any(String),
-      username: 'test_user',
-      email: 'test@email.com',
-      avatar: expect.any(String),
-      iat: expect.any(Number),
-      exp: expect.any(Number),
-    });
+    console.log('req.req.path: ', req.req.path);
+    expect(req.req.path).toEqual('/api/v1/posts');
   });
 
-  it('should list all posts for all users', async () => {
-    
-  });
+  it('should list all posts for all users', async () => {});
 });
