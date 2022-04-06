@@ -22,24 +22,45 @@ describe('Gitty routes', () => {
     );
   });
 
-  it('should login and redirect users to back to dashboard', async () => {
+  it('should login and redirect users to back to posts', async () => {
     const agent = request.agent(app);
 
     const req = await agent
       .get('/api/v1/github/login/callback?code=11')
       .redirects(1);
-
-    expect(req.body).toEqual({
-      id: expect.any(String),
-      username: 'test_user',
-      email: 'test@email.com',
-      avatar: expect.any(String),
-      iat: expect.any(Number),
-      exp: expect.any(Number),
-    });
+    expect(req.req.path).toEqual('/api/v1/posts');
   });
 
   it('should list all posts for all users', async () => {
-    
+    const agent = request.agent(app);
+
+    const res = await agent
+      .get('/api/v1/github/login/callback?code=11')
+      .redirects(1);
+
+    expect(res.body).toEqual([
+      {
+        id: expect.any(String),
+        title: 'Test Title',
+        body: 'Test post',
+      },
+    ]);
+  });
+
+  it('should allow an authenticated user to create a new post', async () => {
+    const agent = request.agent(app);
+
+    await agent.get('/api/v1/github/login/callback?code=11').redirects(1);
+
+    const res = await agent.post('/api/v1/posts').send({
+      title: 'New Title',
+      body: 'New Post',
+    });
+
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      title: 'New Title',
+      body: 'New Post',
+    });
   });
 });
