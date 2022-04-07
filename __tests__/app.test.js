@@ -31,6 +31,19 @@ describe('Gitty routes', () => {
     expect(req.req.path).toEqual('/api/v1/posts');
   });
 
+  it('should sign out a user by deleting the cookie', async () => {
+    const agent = request.agent(app);
+
+    await agent.get('/api/v1/github/login/callback?code=11').redirects(1);
+
+    const res = await agent.delete('/api/v1/github/login/callback?code=11');
+
+    expect(res.body).toEqual({
+      success: true,
+      message: 'Signed out successfully!',
+    });
+  });
+
   it('should list all posts for all users', async () => {
     const agent = request.agent(app);
 
