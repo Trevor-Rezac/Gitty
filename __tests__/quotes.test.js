@@ -14,10 +14,18 @@ describe('quotes routes', () => {
     pool.end();
   });
 
-  it('should display a list of quotes', async () => {
+  it('should fetch and display a list of quotes', async () => {
     const res = await request(app).get('/api/v1/quotes');
 
     expect(res.body).toEqual([
+      {
+        author: expect.any(String),
+        content: expect.any(String),
+      },
+      {
+        author: expect.any(String),
+        content: expect.any(String),
+      },
       {
         author: expect.any(String),
         content: expect.any(String),

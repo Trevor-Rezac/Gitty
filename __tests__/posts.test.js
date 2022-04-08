@@ -14,7 +14,7 @@ describe('posts routes', () => {
     pool.end();
   });
 
-  it('should list all posts for all users', async () => {
+  it.skip('should list all posts for all users', async () => {
     const agent = request.agent(app);
 
     const res = await agent
@@ -30,7 +30,7 @@ describe('posts routes', () => {
     ]);
   });
 
-  it('should allow an authenticated user to create a new post', async () => {
+  it.skip('should allow an authenticated user to create a new post', async () => {
     const agent = request.agent(app);
 
     await agent.get('/api/v1/github/login/callback?code=11').redirects(1);

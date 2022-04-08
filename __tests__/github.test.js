@@ -14,7 +14,7 @@ describe('Gitty routes', () => {
     pool.end();
   });
 
-  it('should redirect user to github oauth page when logging in', async () => {
+  it.skip('should redirect user to github oauth page when logging in', async () => {
     const req = await request(app).get('/api/v1/github/login');
 
     expect(req.header.location).toMatch(
@@ -22,7 +22,7 @@ describe('Gitty routes', () => {
     );
   });
 
-  it('should login and redirect users to back to posts', async () => {
+  it.skip('should login and redirect users to back to posts', async () => {
     const agent = request.agent(app);
 
     const req = await agent
@@ -31,7 +31,7 @@ describe('Gitty routes', () => {
     expect(req.req.path).toEqual('/api/v1/posts');
   });
 
-  it('should sign out a user by deleting the cookie', async () => {
+  it.skip('should sign out a user by deleting the cookie', async () => {
     const agent = request.agent(app);
 
     await agent.get('/api/v1/github/login/callback?code=11').redirects(1);
