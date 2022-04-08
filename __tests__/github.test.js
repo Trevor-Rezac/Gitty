@@ -14,7 +14,7 @@ describe('Gitty routes', () => {
     pool.end();
   });
 
-  it.skip('should redirect user to github oauth page when logging in', async () => {
+  it('should redirect user to github oauth page when logging in', async () => {
     const req = await request(app).get('/api/v1/github/login');
 
     expect(req.header.location).toMatch(
@@ -22,7 +22,7 @@ describe('Gitty routes', () => {
     );
   });
 
-  it.skip('should login and redirect users to back to posts', async () => {
+  it('should login and redirect users to back to posts', async () => {
     const agent = request.agent(app);
 
     const req = await agent
@@ -31,7 +31,7 @@ describe('Gitty routes', () => {
     expect(req.req.path).toEqual('/api/v1/posts');
   });
 
-  it.skip('should sign out a user by deleting the cookie', async () => {
+  it('should sign out a user by deleting the cookie', async () => {
     const agent = request.agent(app);
 
     await agent.get('/api/v1/github/login/callback?code=11').redirects(1);
@@ -43,37 +43,4 @@ describe('Gitty routes', () => {
       message: 'Signed out successfully!',
     });
   });
-
-  // it('should list all posts for all users', async () => {
-  //   const agent = request.agent(app);
-
-  //   const res = await agent
-  //     .get('/api/v1/github/login/callback?code=11')
-  //     .redirects(1);
-
-  //   expect(res.body).toEqual([
-  //     {
-  //       id: expect.any(String),
-  //       title: 'Test Title',
-  //       body: 'Test post',
-  //     },
-  //   ]);
-  // });
-
-  // it('should allow an authenticated user to create a new post', async () => {
-  //   const agent = request.agent(app);
-
-  //   await agent.get('/api/v1/github/login/callback?code=11').redirects(1);
-
-  //   const res = await agent.post('/api/v1/posts').send({
-  //     title: 'New Title',
-  //     body: 'New Post',
-  //   });
-
-  //   expect(res.body).toEqual({
-  //     id: expect.any(String),
-  //     title: 'New Title',
-  //     body: 'New Post',
-  //   });
-  // });
 });
